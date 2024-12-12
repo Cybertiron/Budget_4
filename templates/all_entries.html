@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>All Entries</h2>
+
+{% if all_entries %}
+    {% for entry in all_entries %}
+        <div class="entry">
+            <p><strong>{{ entry.sum }}</strong></p>
+            <p>Date: {{ entry.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            {% if entry.income %}
+                <p><em>Type: Income</em></p>
+            {% else %}
+                <p><em>Type: Expense</em></p>
+            {% endif %}
+
+            <!-- Rodome vartotojo vardą, kuris parašė įrašą -->
+            <p>Written by: {{ entry.user.name }}</p>
+
+            <a href="{{ url_for('delete', id=entry.id) }}">Delete</a>
+            <a href="{{ url_for('update', id=entry.id) }}">Update</a>
+            <hr>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No entries found.</p>
+{% endif %}
+
+{% endblock content %}
